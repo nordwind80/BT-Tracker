@@ -115,6 +115,7 @@ dmypy.json
 .pyre/
 
 # 自定义
+**/*.bak
 **/*.conf
 **/*.txt
 **/*.mp4
