@@ -101,7 +101,7 @@ def arg():
     parser = argparse.ArgumentParser(description="Update BT-Trackers list for Aria2.")
     parser.add_argument("-v", "--version", action="version",
             version=f"BT-Trackers list autoupdate tool. Version: {__version__}")
-    parser.add_argument("-m", "--mode", dest="mode", action="store",
+    parser.add_argument("--mode", dest="mode", action="store",
             choices={
                 'best_ip',
                 'best_domain',
