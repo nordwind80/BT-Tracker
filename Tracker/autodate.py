@@ -5,9 +5,7 @@
 # Date: 2018-12-18 20:11:43
 
 
-import os
 import re
-import fileinput
 import argparse
 import requests
 
@@ -16,7 +14,7 @@ from requests.packages.urllib3.exceptions import InsecureRequestWarning
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 
-__version__ = "0.0.5"
+__version__ = "0.0.6"
 
 
 class Trackers(object):
@@ -53,7 +51,7 @@ class Trackers(object):
                 "all_ws": self.__all_ws
                 }
 
-    def __getResponse(self, url: str, headers: str=None, verify: bool=False, stream: bool=False) -> str:
+    def _getResponse(self, url: str, headers: str=None, verify: bool=False, stream: bool=False) -> str:
         response = requests.get(url, headers=headers, verify=verify, stream=stream)
         if response.status_code != 200:
             print(f"Response error code: {response.status_code}")
@@ -61,33 +59,43 @@ class Trackers(object):
         else:
             return response.text
 
-    def _params(self):
-        urls = re.findall(f"(?P<url>[udp|http|https|wss].*?announce)", self.__getResponse(self._mode, headers=self.__headers))
+    def _update(self) -> None:
+        with open("aria2.conf", "r+") as file:
+            lines = file.readlines()
+            file.seek(0)
+            file.truncate()
+            check = 0
+            for line in lines:
+                if re.search(r"bt-tracker=.*", line):
+                    line = line.replace(line, f"bt-tracker={self._trackers}\n")
+                    file.write(line)
+                    check = 1
+                else:
+                    file.write(line)
+            else:
+                if check:
+                    print(f"BT-Tracker list Update completed, Total: {self.total} tracke.")
+                    return
+                else:
+                    file.write(f"bt-tracker={self._trackers}\n")
+                    print(f"BT-Tracker list Update completed, Total: {self.total} tracke.")
+
+    def _params(self) -> None:
+        urls = re.findall(f"(?P<url>[udp|http|https|wss].*?announce)", self._getResponse(self._mode, headers=self.__headers))
 
         for index, url in enumerate(urls, start=1):
             self._trackers += f"{url},"
-
-        self._trackers.strip(',')
-
-        print(f"Params Trackers list done. Total: {index} trackers")
-
-    def _handler(self):
-        with open('text.conf', 'r+') as file:
-            for index, line in enumerate(file.readlines()):
-                if re.search(r'(bt-tracker=)', line):
-                    os.system(f'sed -i "" "s@bt-tracker.*@bt-tracker={self._trackers}@g" {self._aria2_path} && \ ')
-                    break
-                else:
-                    continue
-            file.writelines(f"bt-tracker={self._trackers}")
-        print("BT-Tracker list upgrade completed.")
+        else:
+            self.total = index
+            self._trackers.strip(',')
+            print(f"Params Trackers list done.")
 
     def start(self, mode: str):
         if mode:
             self._mode = self._select.get(mode)
             print(f"Select {mode} mode.")
         self._params()
-        self._handler()
+        self._update()
 
 def arg():
     parser = argparse.ArgumentParser(description="Update BT-Trackers list for Aria2.")
@@ -109,6 +117,7 @@ def arg():
     if arge.mode:
         track = Trackers()
         track.start(arge.mode)
+
 
 if __name__ == "__main__":
     arg()
