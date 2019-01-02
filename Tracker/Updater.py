@@ -39,7 +39,7 @@ class Trackers(object):
 
     def __init__(self):
         self._aria2_path = "aria2.conf"
-        self._trackers = ''
+        self._trackers = 'bt-tracker='
         self._select = {
                 "best_domain": self.__best_domain,
                 "best_ip": self.__best_ip,
@@ -59,28 +59,25 @@ class Trackers(object):
         else:
             return response.text
 
-    def _update(self) -> None:
+    def _replace(self, check_find=False) -> None:
         with open("aria2.conf", "r+") as file:
             lines = file.readlines()
             file.seek(0)
             file.truncate()
-            check = 0
             for line in lines:
                 if re.search(r"bt-tracker=.*", line):
-                    line = line.replace(line, f"bt-tracker={self._trackers}\n")
+                    line = line.replace(line, f"{self._trackers}\n")
                     file.write(line)
-                    check = 1
+                    check_find = True
                 else:
                     file.write(line)
             else:
-                if check:
-                    print(f"BT-Tracker list Update completed, Total: {self.total} tracke.")
+                if check_find:
                     return
                 else:
-                    file.write(f"bt-tracker={self._trackers}\n")
-                    print(f"BT-Tracker list Update completed, Total: {self.total} tracke.")
+                    file.write(f"{self._trackers}\n")
 
-    def _params(self) -> None:
+    def _getTrackers(self) -> None:
         urls = re.findall(f"(?P<url>[udp|http|https|wss].*?announce)", self._getResponse(self._mode, headers=self.__headers))
 
         for index, url in enumerate(urls, start=1):
@@ -88,14 +85,15 @@ class Trackers(object):
         else:
             self.total = index
             self._trackers.strip(',')
-            print(f"Params Trackers list done.")
+            print(f"Get Trackers list done.")
 
-    def start(self, mode: str):
+    def update(self, mode: str):
         if mode:
             self._mode = self._select.get(mode)
             print(f"Select {mode} mode.")
-        self._params()
-        self._update()
+        self._getTrackers()
+        self._replace()
+        print(f"BT-Tracker list Update completed, Total: {self.total} tracke.")
 
 def arg():
     parser = argparse.ArgumentParser(description="Update BT-Trackers list for Aria2.")
@@ -116,7 +114,7 @@ def arg():
 
     if arge.mode:
         track = Trackers()
-        track.start(arge.mode)
+        track.update(arge.mode)
 
 
 if __name__ == "__main__":
