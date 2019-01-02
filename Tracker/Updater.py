@@ -1,5 +1,6 @@
-# /usr/bin/env python3
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+#
 # Author: eagleiwngs
 # E-Mail: eaglewings.yi@gmail.com
 # Date: 2018-12-18 20:11:43
@@ -59,7 +60,7 @@ class Trackers(object):
         else:
             return response.text
 
-    def _replace(self, check_find=False) -> None:
+    def _replace(self, check_find: bool=False) -> None:
         with open("aria2.conf", "r+") as file:
             lines = file.readlines()
             file.seek(0)
