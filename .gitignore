@@ -125,3 +125,4 @@ dmypy.json
 **/*CVS
 # **/*.gitignore
 **/settings.json
+.pytest_cache
