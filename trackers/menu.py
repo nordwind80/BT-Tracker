@@ -2,7 +2,7 @@
 # Author: Nordwind
 # E-Mail: bm9yZHdpbmQubWVAZ21haWwuY29t
 # Created  Time: 22:10:27 08-04-2019
-# Last Modified: 
+# Last Modified:
 #        - File Name: menu.py
 #        - Command line interface menu.
 
@@ -50,17 +50,17 @@ class Menu(object):
         :returns: TODO
         """
         index = 0
-        s = ''
+        s = ""
         while index < len(self._options):
             if index == self._position:
-                temp = f'\033[32;1m \u2794  \u25CF {self._options[index]} \u2713'
+                temp = f"\033[32;1m \u2794  \u25CF {self._options[index]} \u2713"
             else:
                 temp = f"    \u25CB {self._options[index]} \033[0m"
             temp += f" \033[0m\n"
             # temp += str(self._options[index]) + '\033[0m\n'
             index += 1
             s += temp
-        s += '\n'
+        s += "\n"
         sys.stdout.write(s)
         sys.stdout.flush()
 
@@ -72,7 +72,7 @@ class Menu(object):
 
         """
         if state:
-            sys.stdout.write(self._title + '\n')
+            sys.stdout.write(self._title + "\n")
             sys.stdout.flush()
         if not state:
             self._clear_choose()
@@ -95,7 +95,7 @@ class Menu(object):
             finally:
                 termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
 
-            if key == CTR_C or key == '':
+            if key == CTR_C or key == "":
                 break
             elif key == ENTER:
                 return self._position
@@ -142,11 +142,20 @@ def spin_progress(title: str) -> NoReturn:
 
 def spin():
     while True:
-        yield from '⠹⠸⠼⠴⠦⠧⠇⠏⠋⠙'
+        yield from "⠹⠸⠼⠴⠦⠧⠇⠏⠋⠙"
 
 
 if __name__ == "__main__":
-    menu_options = ['trackers_best (20 trackers)', 'trackers_best_ip (20 trackers)', 'trackers_all (80 trackers)', 'trackers_all_ip (80 trackers)', 'trackers_all_udp (43 trackers)', 'trackers_all_http (28 trackers)', 'trackers_all_https (7 trackers)', 'trackers_all_ws (2 trackers)']
+    menu_options = [
+        "trackers_best (20 trackers)",
+        "trackers_best_ip (20 trackers)",
+        "trackers_all (80 trackers)",
+        "trackers_all_ip (80 trackers)",
+        "trackers_all_udp (43 trackers)",
+        "trackers_all_http (28 trackers)",
+        "trackers_all_https (7 trackers)",
+        "trackers_all_ws (2 trackers)",
+    ]
     menu = Menu("Select tracker. j/down k/up q/exit:", menu_options)
     pos = menu.show()
     print(f"You select \033[32;1m{menu_options[pos]} \033[0mmodel.")

@@ -1,7 +1,7 @@
 # Author: Nordwind
 # E-Mail: bm9yZHdpbmQubWVAZ21haWwuY29t
 # Created  Time: 11:26:58 09-04-2019
-# Last Modified: 
+# Last Modified:
 #        - File Name: spider.py
 #        - Spider Factory.
 
@@ -27,19 +27,19 @@ URL2 = "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_"
 
 class Spider(object):
     """docstring for Spider."""
+
     def __init__(self):
         self._url = URL
         self._model = ""
         self._headers = {
-            'User-Agent':
-            'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) '
-            'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36'
+            "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) "
+            "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36"
         }
 
     def _response(self) -> NoReturn:
         """
             Response object of requests.get.
-        :return:
+        :return: NoReturn
         """
         try:
             self._resp = requests.get(self._url, self._headers)
@@ -72,7 +72,9 @@ class Spider(object):
 
     def _get_trackers(self) -> Trackers:
         self._response()
-        trackers = re.findall(r"(?P<url>(udp|http|https|wss).*?announce)", self._get_text)
+        trackers = re.findall(
+            r"(?P<url>(udp|http|https|wss).*?announce)", self._get_text
+        )
         total = len(trackers)
 
         url_string = ",".join(trackers[0])
@@ -99,7 +101,9 @@ class UpdateInfo(Spider):
     def _parse(self) -> UpdateTime:
         self._response()
         html = etree.HTML(self._get_text)
-        time = re.split(r" => ", html.xpath('//*[@id="readme"]/div[2]/article/h4/text()')[0])[0]
+        time = re.split(
+            r" => ", html.xpath('//*[@id="readme"]/div[2]/article/h4/text()')[0]
+        )[0]
         options = [re.split(r" => ", x)[0] for x in html.xpath(self._xpath)]
         options.sort()
         event.state = True
@@ -158,7 +162,6 @@ class AllWS(Spider):
 
 
 class SpiderFactory(object):
-
     @staticmethod
     def create(model: str):
         options = {
@@ -179,8 +182,8 @@ class SpiderFactory(object):
 if __name__ == "__main__":
 
     factory = SpiderFactory()
-    info = factory.create('update_info')
-    print(info.get('update_info')[1])
+    info = factory.create("update_info")
+    print(info.get("update_info")[1])
 
-    info = factory.create('best')
-    print(info.get('best')[1])
+    info = factory.create("best")
+    print(info.get("best")[1])
