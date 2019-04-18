@@ -10,7 +10,6 @@ import re
 from typing import List, Tuple, Any, Text, Union, NoReturn
 
 import requests
-from lxml import etree
 
 from event import event
 
@@ -87,25 +86,12 @@ class Spider(object):
 
 
 class UpdateInfo(Spider):
-    _xpath = """
-        //*[@id="readme"]/div[2]/article/ul[1]/li[1]/text()|
-        //*[@id="readme"]/div[2]/article/ul[2]/li[1]/text()|
-        //*[@id="readme"]/div[2]/article/ul[1]/li[2]/text()|
-        //*[@id="readme"]/div[2]/article/ul[2]/li[2]/text()|
-        //*[@id="readme"]/div[2]/article/ul[1]/li[3]/text()|
-        //*[@id="readme"]/div[2]/article/ul[1]/li[4]/text()|
-        //*[@id="readme"]/div[2]/article/ul[1]/li[5]/text()|
-        //*[@id="readme"]/div[2]/article/ul[1]/li[6]/text()
-    """
-
     def _parse(self) -> UpdateTime:
         self._response()
-        html = etree.HTML(self._get_text)
-        time = re.split(
-            r" => ", html.xpath('//*[@id="readme"]/div[2]/article/h4/text()')[0]
+        time = re.findall(
+            r"(?P<update_time>Updated: [0-9]{4}-[0-9]{2}-[0-9]{2})", self._get_text
         )[0]
-        options = [re.split(r" => ", x)[0] for x in html.xpath(self._xpath)]
-        options.sort()
+        options = re.findall(r"<li>(?P<options>trackers_.*) =&gt;", self._get_text)
         event.state = True
         return time, options
 

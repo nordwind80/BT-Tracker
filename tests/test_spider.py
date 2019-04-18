@@ -13,40 +13,39 @@ class TestSpiderFactory(object):
 
     def test_datainfo(self):
 
-        info = self._trackers.create('update_info')
-        assert info.get('update_info')[0] == "Updated: 2019-04-17"
+        info = self._trackers.create("update_info")
+        assert info.get("update_info")[0] == "Updated: 2019-04-18"
 
-        assert len(info.get('update_info')[1]) == 8
+        assert len(info.get("update_info")[1]) == 8
 
     def test_best(self):
-        url = self._trackers.create('best')
-        assert url.get('best')[1] == 20
+        url = self._trackers.create("best")
+        assert url.get("best")[1] == 20
 
     def test_bestip(self):
-        url = self._trackers.create('best_ip')
-        assert url.get('best_ip')[1] == 20
+        url = self._trackers.create("best_ip")
+        assert url.get("best_ip")[1] == 20
 
     def test_all(self):
-        url = self._trackers.create('all')
-        assert url.get('all')[1] == 73
+        url = self._trackers.create("all")
+        assert url.get("all")[1] == 80
 
     def test_allip(self):
-        url = self._trackers.create('all_ip')
-        assert url.get('all_ip')[1] == 73
+        url = self._trackers.create("all_ip")
+        assert url.get("all_ip")[1] == 80
 
     def test_udp(self):
-        url = self._trackers.create('all_udp')
-        assert url.get('all_udp')[1] == 40
+        url = self._trackers.create("all_udp")
+        assert url.get("all_udp")[1] == 43
 
     def test_http(self):
-        url = self._trackers.create('all_http')
-        assert url.get('all_http')[1] == 25
+        url = self._trackers.create("all_http")
+        assert url.get("all_http")[1] == 30
 
     def test_https(self):
-        url = self._trackers.create('all_https')
-        assert url.get('all_https')[1] == 7
+        url = self._trackers.create("all_https")
+        assert url.get("all_https")[1] == 6
 
     def test_ws(self):
-        url = self._trackers.create('all_ws')
-        assert url.get('all_ws')[1] == 1
-
+        url = self._trackers.create("all_ws")
+        assert url.get("all_ws")[1] == 1
