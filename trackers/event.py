@@ -3,7 +3,7 @@
 # Author: Nordwind
 # E-Mail: bm9yZHdpbmQubWVAZ21haWwuY29t
 # Created  Time: 2019-04-14 20:14
-# Last Modified: 
+# Last Modified:
 # Description:
 #        - Project:   BT Trackers Updater
 #        - File Name: event.py
@@ -15,12 +15,16 @@ import time
 
 
 class Event(object):
-
     def __init__(self):
         self._finish = False
 
     @property
     def state(self):
+        """
+
+        Returns: -> bool Return the status of event.
+
+        """
         return self._finish
 
     @state.setter

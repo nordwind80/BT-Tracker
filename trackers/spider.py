@@ -148,6 +148,9 @@ class AllWS(Spider):
 
 
 class SpiderFactory(object):
+    def __call__(self, *args, **kwargs):
+        raise TypeError("Can't instantiate directly")
+
     @staticmethod
     def create(model: str):
         options = {
@@ -167,9 +170,8 @@ class SpiderFactory(object):
 
 if __name__ == "__main__":
 
-    factory = SpiderFactory()
-    info = factory.create("update_info")
+    info = SpiderFactory.create("update_info")
     print(info.get("update_info")[1])
 
-    info = factory.create("best")
+    info = SpiderFactory.create("best")
     print(info.get("best")[1])
