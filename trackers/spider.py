@@ -79,11 +79,6 @@ class Spider(object):
         url_string = ",".join(trackers[0])
         return url_string, total
 
-    def get(self, model: str) -> Trackers:
-        self._url = f"{URL2}{model}.txt"
-        event.state = True
-        return self._get_trackers()
-
 
 class UpdateInfo(Spider):
     def _parse(self) -> UpdateTime:
@@ -95,7 +90,7 @@ class UpdateInfo(Spider):
         event.state = True
         return time, options
 
-    def get(self, model: str) -> UpdateTime:
+    def get(self) -> UpdateTime:
         return self._parse()
 
 
@@ -104,11 +99,21 @@ class BestDomain(Spider):
         Tracker of Best Domain.
     """
 
+    def get(self) -> Trackers:
+        self._url = f"{URL2}best.txt"
+        event.state = True
+        return self._get_trackers()
+
 
 class BestIP(Spider):
     """
         Tracker of Best IP.
     """
+
+    def get(self) -> Trackers:
+        self._url = f"{URL2}best_ip.txt"
+        event.state = True
+        return self._get_trackers()
 
 
 class AllDomain(Spider):
@@ -116,11 +121,21 @@ class AllDomain(Spider):
         Tracker of All Domain.
     """
 
+    def get(self) -> Trackers:
+        self._url = f"{URL2}all.txt"
+        event.state = True
+        return self._get_trackers()
+
 
 class AllIP(Spider):
     """
         Tracker of All IP.
     """
+
+    def get(self) -> Trackers:
+        self._url = f"{URL2}all_ip.txt"
+        event.state = True
+        return self._get_trackers()
 
 
 class AllUDP(Spider):
@@ -128,11 +143,21 @@ class AllUDP(Spider):
         Tracker of UDP.
     """
 
+    def get(self) -> Trackers:
+        self._url = f"{URL2}all_udp.txt"
+        event.state = True
+        return self._get_trackers()
+
 
 class AllHTTP(Spider):
     """
         Trackers of HTTP.
     """
+
+    def get(self) -> Trackers:
+        self._url = f"{URL2}all_http.txt"
+        event.state = True
+        return self._get_trackers()
 
 
 class AllHTTPS(Spider):
@@ -140,11 +165,21 @@ class AllHTTPS(Spider):
         Tracker of HTTPS.
     """
 
+    def get(self) -> Trackers:
+        self._url = f"{URL2}all_https.txt"
+        event.state = True
+        return self._get_trackers()
+
 
 class AllWS(Spider):
     """
         Tracker of WS.
     """
+
+    def get(self) -> Trackers:
+        self._url = f"{URL2}all_ws.txt"
+        event.state = True
+        return self._get_trackers()
 
 
 class Spiders(object):
@@ -171,7 +206,9 @@ class Spiders(object):
 if __name__ == "__main__":
 
     info = Spiders.create("update_info")
-    print(info.get("update_info")[1])
+    print(info.get()[1])
 
     info = Spiders.create("best")
-    print(info.get("best")[1])
+    print(info.get()[1])
+
+    print(Spiders.create("all_ws").get()[1])
