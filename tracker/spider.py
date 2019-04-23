@@ -9,19 +9,21 @@
 
 
 import re
+import urllib.request
+import urllib.error
 from typing import List, Tuple, Any, Text, Union, NoReturn
 
-import requests
 
 from .event import status
 
 
 # Type hint
 Trackers = Tuple[str, int]
-UpdateTime = Tuple[str, List[str]]
+UpdateTime = Tuple[list, list]
 UpdateData = Tuple[str, List[str]]
 JSON = Union[str, Any]
 
+# URLS
 URL = "https://github.com/ngosang/trackerslist"
 URL2 = "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_"
 
@@ -39,15 +41,18 @@ class Spider(object):
             "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36"
         }
 
-    def _response(self) -> NoReturn:
+    def _request(self) -> NoReturn:
         """
             Response object of requests.get.
         :return: NoReturn
         """
         try:
-            self._resp = requests.get(self._url, self._headers)
-        except requests.RequestException as why:
-            print(f"Request connect fail. {why}")
+            req = urllib.request.Request(url=self._url, headers=self._headers)
+            self._response = urllib.request.urlopen(req)
+        except urllib.error.HTTPError as why:
+            print(f"Request connect fail. code: {why.code}")
+        except urllib.error.URLError as why:
+            print(f"Request connect failed. reason: {why.reson}")
 
     @property
     def _get_text(self) -> Text:
@@ -55,26 +60,10 @@ class Spider(object):
             return context of requests.Response object.
         :return: Text
         """
-        return self._resp.text
-
-    @property
-    def _get_json(self) -> JSON:
-        """
-            return JSON context of reqeusts.Response object.
-        :return: JSON
-        """
-        return self._resp.json
-
-    @property
-    def _get_content(self) -> bytes:
-        """
-            return cotent of requests.Response object.
-        :return: bytes
-        """
-        return self._resp.content
+        return self._response.read().decode("utf-8")
 
     def _get_trackers(self) -> Trackers:
-        self._response()
+        self._request()
         trackers = re.findall(
             r"(?P<url>(udp|http|https|wss).*?announce)", self._get_text
         )
@@ -86,15 +75,16 @@ class Spider(object):
 
 class UpdateInfo(Spider):
     """Spider to get tracker update information.
-    
+
     """
 
     def _parse(self) -> UpdateTime:
-        self._response()
+        self._request()
+        html = self._get_text
         time = re.findall(
-            r"(?P<update_time>Updated: [0-9]{4}-[0-9]{2}-[0-9]{2})", self._get_text
-        )[0]
-        options = re.findall(r"<li>(?P<options>trackers_.*) =&gt;", self._get_text)
+            r"(?P<update_time>Updated: [0-9]{4}-[0-9]{2}-[0-9]{2})", html
+        )
+        options = re.findall(r"<li>(?P<options>trackers_.*) =&gt;", html)
         return time, options
 
     @status.check
@@ -213,3 +203,4 @@ class Spiders(object):
         }
 
         return options[model]()
+

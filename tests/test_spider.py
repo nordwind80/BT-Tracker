@@ -5,14 +5,14 @@
 # Date: 2018-12-19 20:20:43
 
 
-from ..tracker.spider import Spiders
+from tracker.spider import Spiders
 
 
 class TestSpiders(object):
     def test_datainfo(self):
 
         info = Spiders.create("update_info")
-        assert info.get()[0] == "Updated: 2019-04-19"
+        assert info.get()[0][0] == "Updated: 2019-04-23"
 
         assert len(info.get()[1]) == 8
 
@@ -26,19 +26,19 @@ class TestSpiders(object):
 
     def test_all(self):
         url = Spiders.create("all")
-        assert url.get()[1] == 83
+        assert url.get()[1] == 81
 
     def test_allip(self):
         url = Spiders.create("all_ip")
-        assert url.get()[1] == 83
+        assert url.get()[1] == 81
 
     def test_udp(self):
         url = Spiders.create("all_udp")
-        assert url.get()[1] == 44
+        assert url.get()[1] == 43
 
     def test_http(self):
         url = Spiders.create("all_http")
-        assert url.get()[1] == 31
+        assert url.get()[1] == 30
 
     def test_https(self):
         url = Spiders.create("all_https")
