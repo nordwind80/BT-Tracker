@@ -11,14 +11,14 @@
 #        - Test singleton instance of event.py
 
 
-from BTracker.trackers.event import event
+from ..tracker.event import status
 
 
 class TestEvent(object):
 
     def test_object(self):
-        assert id(event.state) == id(event.state)
+        assert id(status.state) == id(status.state)
 
     def test_state_change(self):
-        event.state = False
-        assert event.state is False
+        status.state = False
+        assert status.state is False

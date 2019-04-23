@@ -2,7 +2,9 @@
 # E-Mail: bm9yZHdpbmQubWVAZ21haWwuY29t
 # Created  Time: 11:26:58 09-04-2019
 # Last Modified:
+#        - Project  : BT Tracker Updater
 #        - File Name: spider.py
+#        - Version : 0.1.2
 #        - Spider Factory.
 
 
@@ -11,7 +13,7 @@ from typing import List, Tuple, Any, Text, Union, NoReturn
 
 import requests
 
-from event import event
+from .event import status
 
 
 # Type hint
@@ -25,7 +27,9 @@ URL2 = "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_"
 
 
 class Spider(object):
-    """docstring for Spider."""
+    """Spider class
+
+    """
 
     def __init__(self):
         self._url = URL
@@ -81,15 +85,19 @@ class Spider(object):
 
 
 class UpdateInfo(Spider):
+    """Spider to get tracker update information.
+    
+    """
+
     def _parse(self) -> UpdateTime:
         self._response()
         time = re.findall(
             r"(?P<update_time>Updated: [0-9]{4}-[0-9]{2}-[0-9]{2})", self._get_text
         )[0]
         options = re.findall(r"<li>(?P<options>trackers_.*) =&gt;", self._get_text)
-        event.state = True
         return time, options
 
+    @status.check
     def get(self) -> UpdateTime:
         return self._parse()
 
@@ -99,9 +107,9 @@ class BestDomain(Spider):
         Tracker of Best Domain.
     """
 
+    @status.check
     def get(self) -> Trackers:
         self._url = f"{URL2}best.txt"
-        event.state = True
         return self._get_trackers()
 
 
@@ -110,9 +118,9 @@ class BestIP(Spider):
         Tracker of Best IP.
     """
 
+    @status.check
     def get(self) -> Trackers:
         self._url = f"{URL2}best_ip.txt"
-        event.state = True
         return self._get_trackers()
 
 
@@ -121,9 +129,9 @@ class AllDomain(Spider):
         Tracker of All Domain.
     """
 
+    @status.check
     def get(self) -> Trackers:
         self._url = f"{URL2}all.txt"
-        event.state = True
         return self._get_trackers()
 
 
@@ -132,9 +140,9 @@ class AllIP(Spider):
         Tracker of All IP.
     """
 
+    @status.check
     def get(self) -> Trackers:
         self._url = f"{URL2}all_ip.txt"
-        event.state = True
         return self._get_trackers()
 
 
@@ -143,9 +151,9 @@ class AllUDP(Spider):
         Tracker of UDP.
     """
 
+    @status.check
     def get(self) -> Trackers:
         self._url = f"{URL2}all_udp.txt"
-        event.state = True
         return self._get_trackers()
 
 
@@ -154,9 +162,9 @@ class AllHTTP(Spider):
         Trackers of HTTP.
     """
 
+    @status.check
     def get(self) -> Trackers:
         self._url = f"{URL2}all_http.txt"
-        event.state = True
         return self._get_trackers()
 
 
@@ -165,9 +173,9 @@ class AllHTTPS(Spider):
         Tracker of HTTPS.
     """
 
+    @status.check
     def get(self) -> Trackers:
         self._url = f"{URL2}all_https.txt"
-        event.state = True
         return self._get_trackers()
 
 
@@ -176,13 +184,17 @@ class AllWS(Spider):
         Tracker of WS.
     """
 
+    @status.check
     def get(self) -> Trackers:
         self._url = f"{URL2}all_ws.txt"
-        event.state = True
         return self._get_trackers()
 
 
 class Spiders(object):
+    """
+        Spider Factory
+    """
+
     def __call__(self, *args, **kwargs):
         raise TypeError("Can't instantiate directly.")
 
@@ -201,14 +213,3 @@ class Spiders(object):
         }
 
         return options[model]()
-
-
-if __name__ == "__main__":
-
-    info = Spiders.create("update_info")
-    print(info.get()[1])
-
-    info = Spiders.create("best")
-    print(info.get()[1])
-
-    print(Spiders.create("all_ws").get()[1])

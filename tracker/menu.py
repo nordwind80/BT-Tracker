@@ -11,10 +11,11 @@ import sys
 import tty
 import termios
 import time
+import threading
 
 from typing import List, Union, NoReturn
 
-from event import event
+from .event import status
 
 
 # type hot
@@ -131,31 +132,48 @@ class Menu(object):
         return user_input
 
 
+class ProgressThread(threading.Thread):
+    """
+        继承 threading.Thread 类 复写 self.run 方法。
+        self.get_result 返回线程的值
+    """
+
+    def __init__(self, target, arg=None):
+        super(ProgressThread, self).__init__()
+        self._result = None
+        self._target = target
+        self._arg = arg
+
+    def run(self):
+        self._result = self._target(self._arg)
+
+    @property
+    def get_result(self):
+        return self._result
+
+
+def progress(target, title, complete, arg=None):
+    t1 = ProgressThread(target=target, arg=arg)
+    t2 = ProgressThread(target=spin_progress, arg=title)
+    threads = [t1, t2]
+    for i in threads:
+        i.setDaemon(True)
+        i.start()
+    for i in threads:
+        i.join()
+
+    print(f"\033[32;1m  \u2713 {complete}\033[0m          ")
+
+    if t1.get_result:
+        return t1.get_result
+    else:
+        return None
+
+
 def spin_progress(title: str) -> NoReturn:
-    sp = spin()
-    while not event.state:
-        sys.stdout.write(f"{next(sp)} {title}")
+    index = 0
+    while not status.finish:
+        sys.stdout.write(f"{'⠹⠸⠼⠴⠦⠧⠇⠏⠋⠙'[index % 10]} {title}")
         sys.stdout.flush()
         sys.stdout.write("\b" * 50)
         time.sleep(0.08)
-
-
-def spin():
-    while True:
-        yield from "⠹⠸⠼⠴⠦⠧⠇⠏⠋⠙"
-
-
-if __name__ == "__main__":
-    menu_options = [
-        "trackers_best (20 trackers)",
-        "trackers_best_ip (20 trackers)",
-        "trackers_all (80 trackers)",
-        "trackers_all_ip (80 trackers)",
-        "trackers_all_udp (43 trackers)",
-        "trackers_all_http (28 trackers)",
-        "trackers_all_https (7 trackers)",
-        "trackers_all_ws (2 trackers)",
-    ]
-    menu = Menu("Select tracker. j/down k/up q/exit:", menu_options)
-    pos = menu.show()
-    print(f"You select \033[32;1m{menu_options[pos]} \033[0mmodel.")

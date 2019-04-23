@@ -14,7 +14,7 @@ __version__ = "0.1.2"
 
 class Tracker(object):
     """
-        Update bt-trackers of aria2.
+        Update bt-tracker of aria2.
     """
 
     def __init__(self):
@@ -62,7 +62,7 @@ class Tracker(object):
         self._getTrackers()
         self._replace()
         print(
-            f"\nBT-Trackers update \033[32;1mcompleted\033[0m, Total: \033[32;1m{self.total}\033[0m trackers.\nexit!"
+            f"\nBT-Trackers update \033[32;1mcompleted\033[0m, Total: \033[32;1m{self.total}\033[0m tracker.\nexit!"
         )
 
 

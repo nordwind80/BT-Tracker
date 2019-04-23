@@ -5,7 +5,7 @@
 # Date: 2018-12-19 20:20:43
 
 
-from BTracker.trackers.spider import Spiders
+from ..tracker.spider import Spiders
 
 
 class TestSpiders(object):
