@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 #
-# Author: Nordwind
-# E-Mail: bm9yZHdpbmQubWVAZ21haWwuY29t
+# Author: eaglewings
+# E-Mail: ZWFnbGV3aW5ncy55aUBnbWFpbC5jb20=
 # Created  Time: 2019-04-23 17:19
 # Last Modified:
 # Description:
@@ -58,9 +58,12 @@ def start() -> None:
     )
     select = menu.show()
     print(f"  You chosen \033[32;1m{update_info[1][select]} \033[0mmodel.\n  {'-'*55}")
+
     option = re.findall(r"^trackers_(.+) \(", update_info[1][select])[0]
     tracker = Spiders.create(option)
+
     trackers = progress(tracker.get, "Start update.", "Trackers update completed.", "")
+
     update = Updater(filer.get_path, trackers[0])
     update.start()
     print(

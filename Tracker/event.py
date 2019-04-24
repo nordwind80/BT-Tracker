@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 #
 # Author: Nordwind
-# E-Mail: bm9yZHdpbmQubWVAZ21haWwuY29t
+# E-Mail:
 # Created  Time: 2019-04-14 20:14
 # Last Modified:
 # Description:

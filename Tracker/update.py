@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 #
-# Author: Nordwind
-# E-Mail: bm9yZHdpbmQubWVAZ21haWwuY29t
+# Author: eaglewings
+# E-Mail: ZWFnbGV3aW5ncy55aUBnbWFpbC5jb20=
 # Created  Time: 2019-04-17 15:17
 # Last Modified:
 # Description:
@@ -67,8 +67,8 @@ class Updater(object):
             file.seek(0)
             file.truncate()
             for line in lines:
-                if re.search(r"bt-tracker=.*", line):
-                    line = line.replace(line, f"bt-tracker={self._trackers}\n")
+                if re.search(r"bt-Tracker=.*", line):
+                    line = line.replace(line, f"bt-Tracker={self._trackers}\n")
                     file.write(line)
                     check = True
                 else:
@@ -77,4 +77,4 @@ class Updater(object):
                 if check:
                     return
                 else:
-                    file.write(f"bt-tracker={self._trackers}\n")
+                    file.write(f"bt-Tracker={self._trackers}\n")

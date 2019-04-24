@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 #
-# Author: Nordwind
-# E-Mail: bm9yZHdpbmQubWVAZ21haWwuY29t
+# Author: eaglewings
+# E-Mail: ZWFnbGV3aW5ncy55aUBnbWFpbC5jb20=
 # Created  Time: 11:26:58 09-04-2019
 # Last Modified:
 #        - Project  : BT Tracker Updater
@@ -76,7 +76,7 @@ class Spider(object):
 
 class UpdateInfo(Spider):
     """
-        Spider to get tracker update information.
+        Spider to get Tracker update information.
     """
 
     def _parse(self):

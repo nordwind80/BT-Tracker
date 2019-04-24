@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 #
-# Author: Nordwind
-# E-Mail: bm9yZHdpbmQubWVAZ21haWwuY29t
+# Author: eaglewings
+# E-Mail: ZWFnbGV3aW5ncy55aUBnbWFpbC5jb20=
 # Created  Time: 2019-04-14 20:13
 # Last Modified:
 # Description:
-#        - Project:   Python
+#        - Project:   BT Trackers Updater
 #        - File Name: test_event.py
 #        - Test singleton instance of event.py
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 #
-# Author: Nordwind
-# E-Mail: bm9yZHdpbmQubWVAZ21haWwuY29t
+# Author: eaglewings
+# E-Mail: ZWFnbGV3aW5ncy55aUBnbWFpbC5jb20=
 # Created  Time: 22:10:27 08-04-2019
 # Last Modified:
 #        - Project  : BT Trackers Updater
