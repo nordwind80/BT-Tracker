@@ -87,7 +87,7 @@ class UpdateInfo(Spider):
         return time, options
 
     @status.check
-    def get(self, model):
+    def get(self):
         result = self._parse()
         return result
 
@@ -98,7 +98,7 @@ class BestDomain(Spider):
     """
 
     @status.check
-    def get(self, model) -> Trackers:
+    def get(self) -> Trackers:
         self._url = f"{URL2}best.txt"
         return self._get_trackers()
 
@@ -109,7 +109,7 @@ class BestIP(Spider):
     """
 
     @status.check
-    def get(self, model) -> Trackers:
+    def get(self) -> Trackers:
         self._url = f"{URL2}best_ip.txt"
         return self._get_trackers()
 
@@ -120,7 +120,7 @@ class AllDomain(Spider):
     """
 
     @status.check
-    def get(self, model) -> Trackers:
+    def get(self) -> Trackers:
         self._url = f"{URL2}all.txt"
         return self._get_trackers()
 
@@ -131,7 +131,7 @@ class AllIP(Spider):
     """
 
     @status.check
-    def get(self, model) -> Trackers:
+    def get(self) -> Trackers:
         self._url = f"{URL2}all_ip.txt"
         return self._get_trackers()
 
@@ -142,7 +142,7 @@ class AllUDP(Spider):
     """
 
     @status.check
-    def get(self, model) -> Trackers:
+    def get(self) -> Trackers:
         self._url = f"{URL2}all_udp.txt"
         return self._get_trackers()
 
@@ -153,7 +153,7 @@ class AllHTTP(Spider):
     """
 
     @status.check
-    def get(self, model) -> Trackers:
+    def get(self) -> Trackers:
         self._url = f"{URL2}all_http.txt"
         return self._get_trackers()
 
@@ -164,7 +164,7 @@ class AllHTTPS(Spider):
     """
 
     @status.check
-    def get(self, model) -> Trackers:
+    def get(self) -> Trackers:
         self._url = f"{URL2}all_https.txt"
         return self._get_trackers()
 
@@ -175,7 +175,7 @@ class AllWS(Spider):
     """
 
     @status.check
-    def get(self, model) -> Trackers:
+    def get(self) -> Trackers:
         self._url = f"{URL2}all_ws.txt"
         return self._get_trackers()
 

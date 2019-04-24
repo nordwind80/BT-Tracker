@@ -18,7 +18,7 @@
                                            /_/
 """
 __title__ = "BT Trackers Updater"
-__version__ = "0.2.1"
+__version__ = "0.2.2"
 __description__ = "A command line interface BT Trackers Updater of Aria2."
 __url__ = "nordwind.me"
 __author__ = "Nordwind"

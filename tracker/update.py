@@ -68,7 +68,7 @@ class Updater(object):
             file.truncate()
             for line in lines:
                 if re.search(r"bt-tracker=.*", line):
-                    line = line.replace(line, f"{self._trackers}\n")
+                    line = line.replace(line, f"bt-tracker={self._trackers}\n")
                     file.write(line)
                     check = True
                 else:

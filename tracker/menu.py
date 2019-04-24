@@ -140,14 +140,14 @@ class ProgressThread(threading.Thread):
         self.get_result 返回线程的值
     """
 
-    def __init__(self, target, arg=None):
+    def __init__(self, target, args=()):
         super(ProgressThread, self).__init__()
         self._result = None
         self._target = target
-        self._arg = arg
+        self._args = args
 
     def run(self):
-        self._result = self._target(self._arg)
+        self._result = self._target(*self._args)
 
     @property
     def get_result(self):
@@ -155,8 +155,8 @@ class ProgressThread(threading.Thread):
 
 
 def progress(target, title, complete, arg=None):
-    t1 = ProgressThread(target=target, arg=arg)
-    t2 = ProgressThread(target=spin_progress, arg=title)
+    t1 = ProgressThread(target=target, args=arg)
+    t2 = ProgressThread(target=spin_progress, args=(title,))
     threads = [t1, t2]
     for i in threads:
         i.setDaemon(True)
