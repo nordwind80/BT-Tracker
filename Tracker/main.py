@@ -12,11 +12,11 @@
 import re
 import argparse
 
-from update import Filer
-from menu import progress, Menu
-from spider import Spiders
-from update import Updater
-from __version__ import __version__ as version
+from .update import Filer
+from .menu import progress, Menu
+from .spider import Spiders
+from .update import Updater
+from .__version__ import __version__ as version
 
 
 def start() -> None:

@@ -15,7 +15,7 @@ import urllib.error
 from typing import List, Tuple, Text, NoReturn
 
 
-from event import status
+from .event import status
 
 
 # Type hint
