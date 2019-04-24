@@ -1,8 +1,10 @@
+#!/usr/bin/env python3
 #
 # Author: Nordwind
 # E-Mail: bm9yZHdpbmQubWVAZ21haWwuY29t
 # Created  Time: 22:10:27 08-04-2019
 # Last Modified:
+#        - Project  : BT Trackers Updater
 #        - File Name: menu.py
 #        - Command line interface menu.
 
@@ -15,7 +17,7 @@ import threading
 
 from typing import List, Union, NoReturn
 
-from .event import status
+from event import status
 
 
 # type hot
@@ -54,7 +56,7 @@ class Menu(object):
         s = ""
         while index < len(self._options):
             if index == self._position:
-                temp = f"\033[32;1m \u2794  \u25CF {self._options[index]} \u2713"
+                temp = f"\033[32;1m \u2712  \u25CF {self._options[index]}"
             else:
                 temp = f"    \u25CB {self._options[index]} \033[0m"
             temp += f" \033[0m\n"
@@ -172,8 +174,9 @@ def progress(target, title, complete, arg=None):
 
 def spin_progress(title: str) -> NoReturn:
     index = 0
-    while not status.finish:
-        sys.stdout.write(f"{'⠹⠸⠼⠴⠦⠧⠇⠏⠋⠙'[index % 10]} {title}")
-        sys.stdout.flush()
-        sys.stdout.write("\b" * 50)
-        time.sleep(0.08)
+    while True:
+        print(f"  {'⠹⠸⠼⠴⠦⠧⠇⠏⠋⠙'[index % 10]} {title}", end="\r", flush=True)
+        time.sleep(0.07)
+        index += 1
+        if status.finished:
+            break

@@ -1,11 +1,15 @@
-# /usr/bin/env python3
-# -*- coding: utf-8 -*-
-# Author: eagleiwngs
-# E-Mail: eaglewings.yi@gmail.com
-# Date: 2018-12-19 20:20:43
+#!/usr/bin/env python3
+#
+# Author: Nordwind
+# E-Mail: bm9yZHdpbmQubWVAZ21haWwuY29t
+# Created  Time: 2019-04-14 20:13
+# Description:
+#        - Project:   BT Trackers Updater
+#        - File Name: test_event.py
+#        - Test Spiders factory.py
 
 
-from tracker.spider import Spiders
+from ..spider import Spiders
 
 
 class TestSpiders(object):

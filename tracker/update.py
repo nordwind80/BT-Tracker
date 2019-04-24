@@ -7,11 +7,11 @@
 # Description:
 #        - Project:   BT Trackers Updater
 #        - File Name: update.py
-#        - Version: 0.1.2
-#        - Updater
+#        - Trackers Updater
 
 
 import os
+import re
 from typing import NoReturn
 
 
@@ -37,27 +37,44 @@ class Filer(object):
         """
         return f"{self._file_path}{self._file_name}"
 
-    def check_dirctory(self) -> NoReturn:
+    def _create_dir(self) -> NoReturn:
+        try:
+            os.mkdir(f"{self._file_path}")
+        except FileExistsError as why:
+            print(f"Create directory failed. {why}")
+
+    def check_dirctory(self) -> bool:
         """
             Find Aria2 directory, If not create it. If mkdir fail, raise FileExistsError error.
         :return: NoReturn
         """
         if os.path.exists(f"{self._file_path}"):
-            print(f"\nFound Aria2. path: {self._file_path}{self._file_name}\n")
+            return True
         else:
-            try:
-                print(
-                    f"\nDon't find aria2, Create aria2 directory. path: {self._file_path}\n"
-                )
-                os.mkdir(f"{self._file_path}")
-            except FileExistsError as why:
-                print(f"Create directory fail. {why}")
+            self._create_dir()
+            return False
 
 
 class Updater(object):
-    pass
+    def __init__(self, path: str, trackers: str):
+        self._path = path
+        self._trackers = trackers
 
-
-if __name__ == "__main__":
-    filer = Filer()
-    print(filer.check_dirctory())
+    def start(self) -> None:
+        check = False
+        with open(self._path, "r+") as file:
+            lines = file.readlines()
+            file.seek(0)
+            file.truncate()
+            for line in lines:
+                if re.search(r"bt-tracker=.*", line):
+                    line = line.replace(line, f"{self._trackers}\n")
+                    file.write(line)
+                    check = True
+                else:
+                    file.write(line)
+            else:
+                if check:
+                    return
+                else:
+                    file.write(f"bt-tracker={self._trackers}\n")

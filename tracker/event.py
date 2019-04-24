@@ -7,7 +7,6 @@
 # Description:
 #        - Project:   BT Trackers Updater
 #        - File Name: event.py
-#        - Version: 0.1.2
 #        - singleton instance of Event
 
 
@@ -24,20 +23,21 @@ class Event(object):
         @wraps(func)
         def wrapper(*args, **kwargs):
             result = func(*args, **kwargs)
-            cls.status = True
+            cls.finished = True
             time.sleep(0.1)
-            cls.status = False
+            cls.finished = False
             return result
 
         return wrapper
 
     @property
-    def finish(self):
+    def finished(self):
         return self._finish
 
-    @finish.setter
-    def finish(self, new_status):
-        self._finish = new_status
+    @finished.setter
+    def finished(self, new_status: bool):
+        if new_status is True:
+            self._finish = new_status
 
 
 status = Event()

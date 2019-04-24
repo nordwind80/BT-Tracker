@@ -7,7 +7,6 @@
 # Description:
 #        - Project:   BT Tracker Updater
 #        - File Name: __version__.py
-#        - Version: 0.1.2
 #        - Updater version.
 
 """
@@ -18,12 +17,10 @@
 /_/ /_/   \__,_/\___/_/|_|\___/_/      \____/ .___/\__,_/\__,_/\__/\___/_/
                                            /_/
 """
-__title__ = "BT Tracker Updater"
-__version__ = "0.1.2"
-__description__ = (
-    "A command line interface Aria2 configtion file BT Trackers Update Tool."
-)
-__url__ = ""
+__title__ = "BT Trackers Updater"
+__version__ = "0.2.1"
+__description__ = "A command line interface BT Trackers Updater of Aria2."
+__url__ = "nordwind.me"
 __author__ = "Nordwind"
-__author_email__ = ""
+__author_email__ = "bm9yZHdpbmQubWVAZ21haWwuY29t"
 __license__ = "MIT"

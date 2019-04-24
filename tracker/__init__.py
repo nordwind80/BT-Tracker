@@ -5,7 +5,6 @@
 # Created  Time: 2019-04-23 18:07
 # Last Modified:
 # Description:
-#        - Project:   Python
+#        - Project:   BT Trackers Updater
 #        - File Name: __init__.py
-#        - Version:
-#        -
+#        - init

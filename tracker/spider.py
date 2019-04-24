@@ -1,27 +1,27 @@
+#!/usr/bin/env python3
+#
 # Author: Nordwind
 # E-Mail: bm9yZHdpbmQubWVAZ21haWwuY29t
 # Created  Time: 11:26:58 09-04-2019
 # Last Modified:
 #        - Project  : BT Tracker Updater
 #        - File Name: spider.py
-#        - Version : 0.1.2
 #        - Spider Factory.
 
 
 import re
 import urllib.request
 import urllib.error
-from typing import List, Tuple, Any, Text, Union, NoReturn
+from typing import List, Tuple, Text, NoReturn
 
 
-from .event import status
+from event import status
 
 
 # Type hint
 Trackers = Tuple[str, int]
 UpdateTime = Tuple[list, list]
 UpdateData = Tuple[str, List[str]]
-JSON = Union[str, Any]
 
 # URLS
 URL = "https://github.com/ngosang/trackerslist"
@@ -43,7 +43,7 @@ class Spider(object):
 
     def _request(self) -> NoReturn:
         """
-            Response object of requests.get.
+            Build response object of urllib.request.Response
         :return: NoReturn
         """
         try:
@@ -55,41 +55,41 @@ class Spider(object):
             print(f"Request connect failed. reason: {why.reson}")
 
     @property
-    def _get_text(self) -> Text:
+    def _get_html(self) -> Text:
         """
-            return context of requests.Response object.
+            return html of http.request.Response object.
         :return: Text
         """
-        return self._response.read().decode("utf-8")
+        html = self._response.read().decode("utf-8")
+        return html
 
     def _get_trackers(self) -> Trackers:
         self._request()
         trackers = re.findall(
-            r"(?P<url>(udp|http|https|wss).*?announce)", self._get_text
+            r"(?P<url>[udp|http|https|wss].*?announce)", self._get_html
         )
         total = len(trackers)
 
-        url_string = ",".join(trackers[0])
+        url_string = ",".join(trackers)
         return url_string, total
 
 
 class UpdateInfo(Spider):
-    """Spider to get tracker update information.
-
+    """
+        Spider to get tracker update information.
     """
 
-    def _parse(self) -> UpdateTime:
+    def _parse(self):
         self._request()
-        html = self._get_text
-        time = re.findall(
-            r"(?P<update_time>Updated: [0-9]{4}-[0-9]{2}-[0-9]{2})", html
-        )
+        html = self._get_html
+        time = re.findall(r"(?P<update_time>Updated: [0-9]{4}-[0-9]{2}-[0-9]{2})", html)
         options = re.findall(r"<li>(?P<options>trackers_.*) =&gt;", html)
         return time, options
 
     @status.check
-    def get(self) -> UpdateTime:
-        return self._parse()
+    def get(self, model):
+        result = self._parse()
+        return result
 
 
 class BestDomain(Spider):
@@ -98,7 +98,7 @@ class BestDomain(Spider):
     """
 
     @status.check
-    def get(self) -> Trackers:
+    def get(self, model) -> Trackers:
         self._url = f"{URL2}best.txt"
         return self._get_trackers()
 
@@ -109,7 +109,7 @@ class BestIP(Spider):
     """
 
     @status.check
-    def get(self) -> Trackers:
+    def get(self, model) -> Trackers:
         self._url = f"{URL2}best_ip.txt"
         return self._get_trackers()
 
@@ -120,7 +120,7 @@ class AllDomain(Spider):
     """
 
     @status.check
-    def get(self) -> Trackers:
+    def get(self, model) -> Trackers:
         self._url = f"{URL2}all.txt"
         return self._get_trackers()
 
@@ -131,7 +131,7 @@ class AllIP(Spider):
     """
 
     @status.check
-    def get(self) -> Trackers:
+    def get(self, model) -> Trackers:
         self._url = f"{URL2}all_ip.txt"
         return self._get_trackers()
 
@@ -142,7 +142,7 @@ class AllUDP(Spider):
     """
 
     @status.check
-    def get(self) -> Trackers:
+    def get(self, model) -> Trackers:
         self._url = f"{URL2}all_udp.txt"
         return self._get_trackers()
 
@@ -153,7 +153,7 @@ class AllHTTP(Spider):
     """
 
     @status.check
-    def get(self) -> Trackers:
+    def get(self, model) -> Trackers:
         self._url = f"{URL2}all_http.txt"
         return self._get_trackers()
 
@@ -164,7 +164,7 @@ class AllHTTPS(Spider):
     """
 
     @status.check
-    def get(self) -> Trackers:
+    def get(self, model) -> Trackers:
         self._url = f"{URL2}all_https.txt"
         return self._get_trackers()
 
@@ -175,7 +175,7 @@ class AllWS(Spider):
     """
 
     @status.check
-    def get(self) -> Trackers:
+    def get(self, model) -> Trackers:
         self._url = f"{URL2}all_ws.txt"
         return self._get_trackers()
 
@@ -203,4 +203,3 @@ class Spiders(object):
         }
 
         return options[model]()
-
