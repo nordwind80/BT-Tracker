@@ -26,7 +26,7 @@ with open("README.md", "r") as file:
 
 setup(
     name="BT-Tracker",
-    version="0.2.3",
+    version="0.2.4",
     author="eaglewings",
     author_email="eaglewings.yi@gmail.com",
     description="BT Trackers Updater of the Aria2, based on Command Line Interface.",
