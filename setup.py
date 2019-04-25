@@ -22,7 +22,7 @@
 import setuptools
 
 with open("README.md", "r") as file:
-    long-description = file.read()
+    long_description = file.read()
 
 setuptools.setup(
     name="BT-Tracker",
@@ -30,7 +30,7 @@ setuptools.setup(
     author="eaglewings",
     author_email="eaglewings.yi@gmail.com",
     description="A command line interface BT Trackers Updater.",
-    long_description=long-description,
+    long_description=long - description,
     long_description_content_type="text/markdown",
     license="MIT",
     packages=setuptools.find_packages(),
