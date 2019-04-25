@@ -1,8 +1,6 @@
 # BT Trackers Updater
 
-A command line interface BT Trackers Update of the Aria2.
-
-![BT-Tracker](tracker.jpg)
+BT Trackers Updater of the Aria2, based on Command Line Interface.
 
 ## Install
 

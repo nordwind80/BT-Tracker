@@ -19,21 +19,22 @@
 """
 
 
-import setuptools
+from setuptools import setup, find_packages
 
 with open("README.md", "r") as file:
     long_description = file.read()
 
-setuptools.setup(
+setup(
     name="BT-Tracker",
     version="0.2.3",
     author="eaglewings",
     author_email="eaglewings.yi@gmail.com",
-    description="A command line interface BT Trackers Updater.",
-    long_description=long - description,
+    description="BT Trackers Updater of the Aria2, based on Command Line Interface.",
+    url="https://github.com/nordwind80/BT-Tracker",
+    long_description=long_description,
     long_description_content_type="text/markdown",
     license="MIT",
-    packages=setuptools.find_packages(),
+    packages=find_packages(),
     keywords=["aria2", "Tracker", "cli", "updater"],
     include_package_data=True,
     entry_points={"console_scripts": ["BT-Tracker = Tracker.main:start"]},

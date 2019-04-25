@@ -19,7 +19,7 @@
 """
 __title__ = "BT-Tracker"
 __version__ = "0.2.3"
-__description__ = "A command line interface BT Trackers Updater of Aria2."
+__description__ = "BT Trackers Updater of the Aria2, based on Command Line Interface."
 __url__ = "speedbird.cc"
 __author__ = "eaglewings"
 __author_email__ = "ZWFnbGV3aW5ncy55aUBnbWFpbC5jb20="
