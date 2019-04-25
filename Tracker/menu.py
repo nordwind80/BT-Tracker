@@ -17,7 +17,7 @@ import threading
 
 from typing import List, Union, NoReturn
 
-from .event import status
+from Tracker.event import status
 
 
 # type hot

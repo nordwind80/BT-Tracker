@@ -10,12 +10,12 @@
 
 
 import re
-import urllib.request
-import urllib.error
+from urllib import request
+from urllib import error
 from typing import List, Tuple, Text, NoReturn
 
 
-from .event import status
+from Tracker.event import status
 
 
 # Type hint
@@ -35,7 +35,7 @@ class Spider(object):
 
     def __init__(self):
         self._url = URL
-        self._model = ""
+        self._response = None
         self._headers = {
             "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) "
             "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36"
@@ -47,12 +47,12 @@ class Spider(object):
         :return: NoReturn
         """
         try:
-            req = urllib.request.Request(url=self._url, headers=self._headers)
-            self._response = urllib.request.urlopen(req)
-        except urllib.error.HTTPError as why:
+            req = request.Request(url=self._url, headers=self._headers)
+            self._response = request.urlopen(req)
+        except error.HTTPError as why:
             print(f"Request connect fail. code: {why.code}")
-        except urllib.error.URLError as why:
-            print(f"Request connect failed. reason: {why.reson}")
+        except error.URLError as why:
+            print(f"Request connect failed. reason: {why.reason}")
 
     @property
     def _get_html(self) -> Text:

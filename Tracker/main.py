@@ -12,22 +12,21 @@
 import re
 import argparse
 
-from .update import Filer
-from .menu import progress, Menu
-from .spider import Spiders
-from .update import Updater
-from .__version__ import __version__ as version
+from Tracker.update import Filer, Updater
+from Tracker.menu import progress, Menu
+from Tracker.spider import Spiders
+from Tracker.__version__ import __version__ as version
 
 
 def start() -> None:
     parser = argparse.ArgumentParser(
-        description="BT Trackers Updater of Aria2 by Nordwind."
+        description="BT Trackers Updater of Aria2 by Eaglewings."
     )
     parser.add_argument(
         "-v",
         "--version",
         action="version",
-        version=f"BT Trackers Updater of Aria2 by Nordwind. Version: {version}",
+        version=f"BT Trackers Updater of Aria2 by Eaglewings. Version: {version}",
     )
     parser.parse_args()
 

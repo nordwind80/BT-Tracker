@@ -17,8 +17,8 @@
 /_/ /_/   \__,_/\___/_/|_|\___/_/      \____/ .___/\__,_/\__,_/\__/\___/_/
                                            /_/
 """
-__title__ = "BTracker"
-__version__ = "0.2.2"
+__title__ = "BT-Tracker"
+__version__ = "0.2.3"
 __description__ = "A command line interface BT Trackers Updater of Aria2."
 __url__ = "speedbird.cc"
 __author__ = "eaglewings"

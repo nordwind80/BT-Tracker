@@ -21,21 +21,27 @@
 
 import setuptools
 
+with open("README.md", "r") as file:
+    long-description = file.read()
 
 setuptools.setup(
-    name="BTracker",
-    version="0.2.2",
+    name="BT-Tracker",
+    version="0.2.3",
     author="eaglewings",
     author_email="eaglewings.yi@gmail.com",
     description="A command line interface BT Trackers Updater.",
+    long_description=long-description,
+    long_description_content_type="text/markdown",
     license="MIT",
     packages=setuptools.find_packages(),
     keywords=["aria2", "Tracker", "cli", "updater"],
     include_package_data=True,
-    entry_points={"console_scripts": ["BTracker = Tracker.main:start"]},
+    entry_points={"console_scripts": ["BT-Tracker = Tracker.main:start"]},
     classifiers=[
+        "Environment :: Console",
         "License :: OSI Approved :: MIT License",
         "Operating System :: MacOS :: MacOS X",
+        "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
     ],
 )
