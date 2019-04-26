@@ -60,7 +60,7 @@ class Updater(object):
         self._path = path
         self._trackers = trackers
 
-    def start(self) -> None:
+    def start(self) -> NoReturn:
         check = False
         with open(self._path, "r+") as file:
             lines = file.readlines()

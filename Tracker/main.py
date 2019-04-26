@@ -31,7 +31,7 @@ def start() -> None:
     parser.parse_args()
 
     print(
-        f"  BT Trackers Updater of Aria2 by Nordwind. \n\n  Version: {version}\n\n  - Initialization:\n  {'-'*55}"
+        f"  BT Trackers Updater of Aria2 by Eaglewings. \n\n  Version: {version}\n\n  - Initialization:\n  {'-'*55}"
     )
     filer = Filer()
     info = Spiders.create("update_info")
