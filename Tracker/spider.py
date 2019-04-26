@@ -15,7 +15,7 @@ from urllib import error
 from typing import List, Tuple, Text, NoReturn
 
 
-from Tracker.event import status
+from event import status
 
 
 # Type hint
@@ -189,7 +189,7 @@ class Spiders(object):
         raise TypeError("Can't instantiate directly.")
 
     @staticmethod
-    def create(model: str):
+    def build(model: str):
         options = {
             "update_info": UpdateInfo,
             "best": BestDomain,
@@ -202,4 +202,9 @@ class Spiders(object):
             "all_ws": AllWS,
         }
 
-        return options[model]()
+        try:
+            mod = re.findall(r"^trackers_(.+) \(", model)[0]
+        except IndexError as why:
+            return options[model]()
+        else:
+            return options[mod]()

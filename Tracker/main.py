@@ -9,13 +9,12 @@
 #        - File Name: main.py
 #        - main
 
-import re
 import argparse
 
-from Tracker.update import Filer, Updater
-from Tracker.menu import progress, Menu
-from Tracker.spider import Spiders
-from Tracker.__version__ import __version__ as version
+from update import Filer, Updater
+from menu import progress, Menu
+from spider import Spiders
+from __version__ import __version__ as version
 
 
 def start() -> None:
@@ -34,7 +33,7 @@ def start() -> None:
         f"  BT Trackers Updater of Aria2 by Eaglewings. \n\n  Version: {version}\n\n  - Initialization:\n  {'-'*55}"
     )
     filer = Filer()
-    info = Spiders.create("update_info")
+    info = Spiders.build("update_info")
 
     if filer.check_dirctory():
         print(f"\033[32;1m  \u2713 Found Aria2 directory.\033[0m")
@@ -56,17 +55,14 @@ def start() -> None:
         update_info[1],
     )
     select = menu.show()
-    print(f"  You chosen \033[32;1m{update_info[1][select]} \033[0mmodel.\n  {'-'*55}")
 
-    option = re.findall(r"^trackers_(.+) \(", update_info[1][select])[0]
-    tracker = Spiders.create(option)
-
+    tracker = Spiders.build(update_info[1][select])
     trackers = progress(tracker.get, "Start update.", "Trackers update completed.", "")
 
     update = Updater(filer.get_path, trackers[0])
     update.start()
     print(
-        f"  {'-'*55}\n  Updated \033[32;1m{trackers[1]}\033[0m tracker in \033[32;1m{filer.get_path}\033[0m.\n\n  "
+        f"  {'-'*55}\n  Updated \033[32;1m{trackers[1]}\033[0m trackers in \033[32;1m{filer.get_path}\033[0m.\n\n  "
         f"Updater exit! "
     )
 
