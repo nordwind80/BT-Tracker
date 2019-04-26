@@ -15,9 +15,10 @@ import termios
 import time
 import threading
 
+from functools import wraps
 from typing import List, Union, NoReturn
 
-from Tracker.event import status
+from event import status
 
 
 # type hot
@@ -33,61 +34,70 @@ DIRECTION = "\x1b"
 ENTER = "\r"
 
 
+def pos_check():
+    def decorator(func):
+        @wraps(func)
+        def wrapper(self, *args, **kwargs):
+            func(self, *args, **kwargs)
+            self._position %= self._total
+            return
+
+        return wrapper
+
+    return decorator
+
+
 class Menu(object):
-
-    """Docstring for Menu. """
-
     def __init__(self, title: str, options: MenuOptions):
-        """TODO: to be defined1.
-
-        :TODO: TODO
-        """
         self._title = title
         self._options = options
         self._position = 0
+        self._total: int = len(options)
 
-    def _show_choose(self) -> NoReturn:
-        """TODO: Docstring for _show_choos.
+    @staticmethod
+    def _cli_input():
+        user_input = sys.stdin.read(1)
+        if user_input == DIRECTION:
+            user_input += sys.stdin.read(2)
+        return user_input
 
-        :arg1: TODO
-        :returns: TODO
-        """
+    @pos_check()
+    def _move_up(self):
+        self._position -= 1
+
+    @pos_check()
+    def _move_down(self):
+        self._position += 1
+
+    def _build_menu(self):
         index = 0
         s = ""
-        while index < len(self._options):
+        while index < self._total:
             if index == self._position:
-                temp = f"\033[32;1m \u2712  \u25CF {self._options[index]}"
+                temp = f"\033[32;1m \u2712  \u25CF {self._options[index]} \033[0m\n"
             else:
-                temp = f"    \u25CB {self._options[index]} \033[0m"
-            temp += f" \033[0m\n"
-            # temp += str(self._options[index]) + '\033[0m\n'
+                temp = f"    \u25CB {self._options[index]} \033[0m\n"
             index += 1
             s += temp
         s += "\n"
-        sys.stdout.write(s)
+        self._draw(s)
+
+    def _draw(self, string: str):
+        sys.stdout.write(string)
         sys.stdout.flush()
 
-    def _set_menu(self, state: bool = True) -> NoReturn:
-        """TODO: Docstring for _set_menu.
-
-        :arg1: TODO
-        :returns: TODO
-
-        """
+    def _status(self, state: bool = True):
         if state:
-            sys.stdout.write(self._title + "\n")
-            sys.stdout.flush()
+            self._draw(f"{self._title}\n")
         if not state:
-            self._clear_choose()
-        self._show_choose()
+            self._clear()
+        self._build_menu()
 
-    def show(self) -> int:
-        """TODO: Docstring for _show_menu.
+    def _clear(self):
+        self._draw(f"\033[{len(self._options) + 1}A\033[K")
 
-        :returns: TODO
-        """
-
-        self._set_menu()
+    def show(self):
+        self._status()
 
         while True:
             fd = sys.stdin.fileno()
@@ -98,40 +108,19 @@ class Menu(object):
             finally:
                 termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
 
-            if key == CTR_C or key == "":
+            if key == CTR_C or key == "" or key == EXIT:
                 break
             elif key == ENTER:
+                print(
+                    f"  You chosen \033[32;1m{self._options[self._position]}\033[0m.\n  {'-'*55}"
+                )
                 return self._position
             elif key == UP:
-                self._position -= 1
+                self._move_up()
             elif key == DOWN:
-                self._position += 1
+                self._move_down()
 
-            if self._position < 0:
-                self._position = len(self._options) - 1
-            elif self._position >= len(self._options):
-                self._position = 0
-
-            self._set_menu(False)
-
-    def _clear_choose(self) -> NoReturn:
-        """TODO: Docstring for _clear_choos.
-
-        :arg1: TODO
-        :returns: TODO
-        """
-        sys.stdout.write(f"\033[{len(self._options) + 1}A\033[K")
-        sys.stdin.flush()
-
-    def _cli_input(self) -> UserInput:
-        """ Get command line interface input.
-
-        :returns: input: str
-        """
-        user_input = sys.stdin.read(1)
-        if user_input == DIRECTION:
-            user_input += sys.stdin.read(2)
-        return user_input
+            self._status(False)
 
 
 class ProgressThread(threading.Thread):
