@@ -10,7 +10,7 @@
 #        - Test singleton instance of event.py
 
 
-from event import status
+from ..event import status
 
 
 class TestEvent(object):

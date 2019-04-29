@@ -8,3 +8,6 @@
 #        - Project:   BT Trackers Updater
 #        - File Name: __init__.py
 #        - init
+
+from .main import start
+

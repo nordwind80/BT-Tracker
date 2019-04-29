@@ -15,7 +15,7 @@ from urllib import error
 from typing import List, Tuple, Text, NoReturn
 
 
-from event import status
+from .event import status
 
 
 # Type hint
@@ -60,8 +60,7 @@ class Spider(object):
             return html of http.request.Response object.
         :return: Text
         """
-        html = self._response.read().decode("utf-8")
-        return html
+        return self._response.read().decode("utf-8")
 
     def _get_trackers(self) -> Trackers:
         self._request()
@@ -204,7 +203,7 @@ class Spiders(object):
 
         try:
             mod = re.findall(r"^trackers_(.+) \(", model)[0]
-        except IndexError as why:
+        except IndexError:
             return options[model]()
         else:
             return options[mod]()

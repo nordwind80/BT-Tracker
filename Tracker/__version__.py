@@ -18,9 +18,9 @@
                                            /_/
 """
 __title__ = "BT-Tracker"
-__version__ = "0.2.4"
-__description__ = "BT Trackers Updater of the Aria2, based on Command Line Interface."
-__url__ = "speedbird.cc"
+__version__ = "0.2.5"
+__description__ = "BT Trackers Updater of the Aria2, Based on Command Line Interface."
+__url__ = "https://github.com/nordwind80/BT-Tracker"
 __author__ = "eaglewings"
 __author_email__ = "ZWFnbGV3aW5ncy55aUBnbWFpbC5jb20="
 __license__ = "MIT"

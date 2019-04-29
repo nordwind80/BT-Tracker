@@ -11,10 +11,10 @@
 
 import argparse
 
-from update import Filer, Updater
-from menu import progress, Menu
-from spider import Spiders
-from __version__ import __version__ as version
+from .update import Filer, Updater
+from .menu import progress, Menu
+from .spider import Spiders
+from .__version__ import __version__ as version
 
 
 def start() -> None:
@@ -65,7 +65,3 @@ def start() -> None:
         f"  {'-'*55}\n  Updated \033[32;1m{trackers[1]}\033[0m trackers in \033[32;1m{filer.get_path}\033[0m.\n\n  "
         f"Updater exit! "
     )
-
-
-if __name__ == "__main__":
-    start()

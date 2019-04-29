@@ -18,7 +18,7 @@ import threading
 from functools import wraps
 from typing import List, Union, NoReturn
 
-from event import status
+from .event import status
 
 
 # type hot

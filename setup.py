@@ -26,7 +26,7 @@ with open("README.md", "r") as file:
 
 setup(
     name="BT-Tracker",
-    version="0.2.4",
+    version="0.2.5",
     author="eaglewings",
     author_email="eaglewings.yi@gmail.com",
     description="BT Trackers Updater of the Aria2, based on Command Line Interface.",
@@ -44,5 +44,5 @@ setup(
         "Operating System :: MacOS :: MacOS X",
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
-    ],
+    ], install_requires = ['requests']
 )
