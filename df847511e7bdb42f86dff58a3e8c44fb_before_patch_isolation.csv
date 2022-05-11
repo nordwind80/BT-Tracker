@@ -1,0 +1,2 @@
+id,module,name,file,doc,markers,status,message,duration
+Tracker/tests/test_event.py::TestEvent::test_object,Tracker.tests.test_event,test_object,Tracker/tests/test_event.py,,,failed,AttributeError: 'Event' object has no attribute 'state',9.078999937628396e-05

@@ -1,0 +1,3 @@
+id,module,name,file,doc,markers,status,message,duration
+Tracker/tests/test_event.py::TestEvent::test_state_change,Tracker.tests.test_event,test_state_change,Tracker/tests/test_event.py,,,passed,,8.954000077210367e-05
+Tracker/tests/test_event.py::TestEvent::test_object,Tracker.tests.test_event,test_object,Tracker/tests/test_event.py,,,passed,,0.00010837299851118587
